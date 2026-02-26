@@ -11,8 +11,8 @@ export type TourOffer = {
 
 export type GeoOption =
   | { type: "country"; id: string; label: string; flag: string }
-  | { type: "city"; id: number; label: string }
-  | { type: "hotel"; id: number; label: string; img: string };
+  | { type: "city"; id: number; label: string; countryId: string }
+  | { type: "hotel"; id: number; label: string; countryId: string };
 
 export type SearchParams = {
   destination: GeoOption;

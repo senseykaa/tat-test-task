@@ -9,6 +9,7 @@ export type Country = {
 export type City = {
   id: number;
   name: string;
+  countryId: string;
 };
 
 export type GeoEntity =

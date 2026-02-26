@@ -25,12 +25,14 @@ export const useSearchTours = () => {
   const setError = useSetError();
   const reset = useResetSearch();
 
-  const countryId =
-    destination?.type === "country"
-      ? destination.id
-      : destination?.type === "city" || destination?.type === "hotel"
-        ? null // TODO: resolve countryId from city/hotel in task 4
-        : null;
+  const countryId = (() => {
+    if (!destination) return null;
+
+    if (destination.type === "country") return destination.id;
+
+    // city and hotel both have countryId
+    return destination.countryId;
+  })();
 
   // Cache hotels by countryId — don't fetch them every time
   const { data: hotelsData } = useQuery({
