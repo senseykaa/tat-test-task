@@ -1,7 +1,7 @@
 import type { CountriesMap } from "~/api/geo/types";
 import type { HotelsMap } from "~/api/hotels/types";
 import type { PricesMap } from "~/api/prices/types";
-import type { TourOffer } from "~/types/global";
+import type { TourOffer } from "~/types/tours";
 
 export const aggregateTours = (
   prices: PricesMap,

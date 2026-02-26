@@ -1,4 +1,4 @@
-import type { GeoOption, TourOffer } from "~/types/global";
+import type { GeoOption, TourOffer } from "~/types/tours";
 
 export type SearchStatus = "idle" | "loading" | "success" | "error";
 

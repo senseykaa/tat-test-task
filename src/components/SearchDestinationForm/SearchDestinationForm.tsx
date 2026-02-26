@@ -3,7 +3,7 @@ import { flushSync } from "react-dom";
 
 import { useGeoSearch } from "~/hooks/useGeoSearch";
 import { useClearDestination, useDestination, useSetDestination } from "~/store/search/selectors";
-import type { GeoOption as GeoOptionType } from "~/types/global";
+import type { GeoOption as GeoOptionType } from "~/types/tours";
 
 import { Button } from "../UI/Button";
 import { Combobox } from "../UI/Combobox";

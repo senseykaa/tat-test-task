@@ -1,5 +1,5 @@
 import { TourCard } from "~/components/Cards/TourCard";
-import type { TourOffer } from "~/types/global";
+import type { TourOffer } from "~/types/tours";
 
 import styles from "./styles.module.scss";
 

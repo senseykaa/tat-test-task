@@ -14,7 +14,7 @@ import {
   useSetStatus,
   useSetTours,
 } from "~/store/search/selectors";
-import type { GeoOption } from "~/types/global";
+import type { GeoOption } from "~/types/tours";
 
 export const useSearchTours = () => {
   const tokenRef = useRef<SearchToken | null>(null);

@@ -1,4 +1,4 @@
-import type { TourOffer } from "~/types/global";
+import type { TourOffer } from "~/types/tours";
 import { formatCurrency } from "~/utils/price";
 import { formatDateToLocale } from "~/utils/time";
 

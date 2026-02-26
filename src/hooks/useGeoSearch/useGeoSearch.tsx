@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { getCountries, searchGeo } from "~/api/geo/api";
-import type { GeoOption } from "~/types/global";
+import type { GeoOption } from "~/types/tours";
 
 import { useDebounce } from "../useDebounce";
 

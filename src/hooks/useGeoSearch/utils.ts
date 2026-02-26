@@ -1,5 +1,5 @@
 import type { CountriesMap, GeoResponse } from "~/api/geo/types";
-import type { GeoOption } from "~/types/global";
+import type { GeoOption } from "~/types/tours";
 
 export const toGeoOptions = (geo: GeoResponse): GeoOption[] => {
   return Object.values(geo).map((entity) => {

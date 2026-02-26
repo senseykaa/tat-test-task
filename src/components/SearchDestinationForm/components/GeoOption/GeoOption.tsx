@@ -1,5 +1,5 @@
 import { GEO_ICONS } from "~/constants/geo";
-import type { GeoOption as GeoOptionType } from "~/types/global";
+import type { GeoOption as GeoOptionType } from "~/types/tours";
 
 import styles from "./styles.module.scss";
 
