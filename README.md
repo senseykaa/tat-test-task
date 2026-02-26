@@ -2,7 +2,7 @@
 
 A client-side tour search service built as a technical assessment for a Senior Frontend Engineer position.
 
-**🔗 Live Demo:** [https://tour-search-app.vercel.app](https://tour-search-app.vercel.app)
+**🔗 Live Demo:** [https://tat-test-task-zeta.vercel.app/](https://tat-test-task-zeta.vercel.app/)
 
 ---
 
