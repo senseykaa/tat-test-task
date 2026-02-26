@@ -1,0 +1,78 @@
+import { useQuery } from "@tanstack/react-query";
+import { useCallback, useRef } from "react";
+
+import { getHotels } from "~/api/hotels/api";
+import { cancelSearch, createSearchToken, startSearch } from "~/services/search";
+import type { SearchToken } from "~/services/search/types";
+import { aggregateTours } from "~/services/tours";
+import {
+  useDestination,
+  useResetSearch,
+  useSearchStatus,
+  useSetError,
+  useSetStatus,
+  useSetTours,
+} from "~/store/search/selectors";
+
+export const useSearchTours = () => {
+  const tokenRef = useRef<SearchToken | null>(null);
+
+  const destination = useDestination();
+  const status = useSearchStatus();
+  const setStatus = useSetStatus();
+  const setTours = useSetTours();
+  const setError = useSetError();
+  const reset = useResetSearch();
+
+  const countryId =
+    destination?.type === "country"
+      ? destination.id
+      : destination?.type === "city" || destination?.type === "hotel"
+        ? null // TODO: resolve countryId from city/hotel in task 4
+        : null;
+
+  // Cache hotels by countryId — don't fetch them every time
+  const { data: hotelsData } = useQuery({
+    queryKey: ["hotels", countryId],
+    queryFn: () => getHotels(countryId!),
+    enabled: !!countryId,
+    staleTime: Infinity,
+  });
+
+  const handleSearch = useCallback(async () => {
+    if (!countryId) return;
+
+    // Cancel previous search if exists
+    if (tokenRef.current) {
+      await cancelSearch(tokenRef.current);
+    }
+
+    // token.value will be populated by startSearch after API response
+    const token = createSearchToken("");
+    tokenRef.current = token;
+
+    reset();
+    setStatus("loading");
+
+    try {
+      const prices = await startSearch(countryId, token);
+
+      // ignore results if search was cancelled
+      if (token.cancelled) return;
+
+      const hotels = hotelsData?.data ?? {};
+      const tours = aggregateTours(prices, hotels);
+
+      setTours(tours);
+      setStatus("success");
+    } catch {
+      if (token.cancelled) return;
+
+      setError("Під час пошуку сталася помилка. Спробуйте ще раз.");
+
+      setStatus("error");
+    }
+  }, [countryId, hotelsData, reset, setStatus, setTours, setError]);
+
+  return { handleSearch, status };
+};

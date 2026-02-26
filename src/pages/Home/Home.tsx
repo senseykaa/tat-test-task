@@ -1,12 +1,11 @@
 import { SearchDestinationForm } from "~/components/SearchDestinationForm";
+import { SearchResults } from "~/components/SearchResults";
+import { useSearchTours } from "~/hooks/useSearchTours";
 
 import styles from "./styles.module.scss";
 
 export const Home = () => {
-  const onSubmit = () => {
-    // todo
-    console.log("search submitted");
-  };
+  const { handleSearch } = useSearchTours();
 
   return (
     <div className={styles.home}>
@@ -15,7 +14,9 @@ export const Home = () => {
 
         <p className={styles.subheading}>Найкращі ціни на готелі по всьому світу</p>
 
-        <SearchDestinationForm onSubmit={onSubmit} />
+        <SearchDestinationForm onSubmit={handleSearch} />
+
+        <SearchResults />
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { isAxiosError } from "axios";
+
 import { getSearchPrices, startSearchPrices, stopSearchPrices } from "~/api/prices/api";
 import type { PricesMap } from "~/api/prices/types";
 
@@ -15,19 +17,17 @@ const pollSearchPrices = async (token: SearchToken, retries = 0): Promise<Prices
   } catch (error: unknown) {
     if (token.cancelled) return {};
 
-    const response = (error as { response?: { status: number; data: { waitUntil?: string } } })
-      .response;
-
-    // 425 — it's not ready, wait and try again
-    if (response?.status === 425) {
-      const waitMs = response.data.waitUntil ? getWaitMs(response.data.waitUntil) : 1000;
+    // 425 — not ready yet, wait and retry
+    if (isAxiosError(error) && error.response?.status === 425) {
+      const waitUntil = error.response.data?.waitUntil;
+      const waitMs = waitUntil ? getWaitMs(waitUntil) : 1000;
 
       await wait(waitMs);
 
       return pollSearchPrices(token, retries);
     }
 
-    // Other errors - retry until MAX_RETRIES
+    // Other errors — retry up to MAX_RETRIES
     if (retries < MAX_RETRIES) {
       await wait(1000);
 

@@ -1,0 +1,1 @@
+export { SearchResultsError } from "./SearchResultsError";
