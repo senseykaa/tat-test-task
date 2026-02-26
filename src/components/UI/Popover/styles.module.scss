@@ -1,0 +1,18 @@
+.container {
+  position: relative;
+
+  width: 100%;
+}
+
+.popover {
+  z-index: 100;
+
+  overflow-y: auto;
+
+  max-height: 320px;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-background);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 10%);
+}

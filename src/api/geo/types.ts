@@ -1,3 +1,5 @@
+import type { Hotel } from "../hotels/types";
+
 export type Country = {
   id: string;
   name: string;
@@ -9,7 +11,10 @@ export type City = {
   name: string;
 };
 
-export type GeoEntity = (Country & { type: "country" }) | (City & { type: "city" });
+export type GeoEntity =
+  | (Country & { type: "country" })
+  | (City & { type: "city" })
+  | (Hotel & { type: "hotel" });
 
 export type CountriesMap = Record<string, Country>;
 export type GeoResponse = Record<string, GeoEntity>;

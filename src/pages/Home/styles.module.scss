@@ -1,0 +1,30 @@
+.home {
+  background-color: var(--color-background-secondary);
+}
+
+.hero {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 80px var(--spacing-xl) var(--spacing-xl);
+
+  text-align: center;
+}
+
+.heading {
+  margin-bottom: var(--spacing-sm);
+
+  font-size: 36px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.subheading {
+  margin-bottom: var(--spacing-xl);
+
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+}
