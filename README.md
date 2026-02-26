@@ -16,14 +16,14 @@ A client-side tour search service built as a technical assessment for a Senior F
 
 ```bash
 nvm use        # switch to correct Node version
-pnpm install    # install dependencies
-pnpm run dev    # start dev server at http://localhost:5173
+pnpm install   # install dependencies
+pnpm run dev   # start dev server at http://localhost:5173
 ```
 
 ### Build
 
 ```bash
-pnpm run build  # production build
+pnpm run build   # production build
 pnpm run preview # preview production build
 ```
 
@@ -73,30 +73,37 @@ pnpm run preview # preview production build
 
 ```
 src/
-├── api/              # API layer — typed wrappers around mock functions
-│   ├── geo/          # getCountries, searchGeo
-│   ├── hotels/       # getHotels, getHotel
-│   ├── prices/       # startSearchPrices, getSearchPrices, stopSearchPrices
-│   ├── client.ts     # axios instance with response interceptor
-│   └── mock/         # axios-mock-adapter bridging api.js → axios
+├── api/                  # API layer — typed wrappers around mock functions
+│   ├── geo/              # getCountries, searchGeo
+│   ├── hotels/           # getHotels, getHotel
+│   ├── prices/           # startSearchPrices, getSearchPrices, stopSearchPrices
+│   ├── client.ts         # axios instance with response interceptor
+│   └── mock/             # axios-mock-adapter bridging api.js → axios
 ├── services/
-│   ├── search/       # polling logic, retry, token management, cancel
-│   └── tours/        # aggregateTours — merges prices + hotels + countries
+│   ├── search/           # polling logic, retry, token management, cancel
+│   └── tours/            # aggregateTours — merges prices + hotels + countries
 ├── store/
-│   └── search/       # Zustand store — destination, status, tours, error
+│   └── search/           # Zustand store — destination, status, tours, error
 ├── hooks/
-│   ├── useSearchTours.ts   # orchestrates search flow
-│   ├── useGeoSearch.ts     # geo search with debounce
-│   └── useDebounce.ts      # reusable debounce hook
+│   ├── useSearchTours.ts # orchestrates search flow
+│   ├── useGeoSearch.ts   # geo search with debounce
+│   └── useDebounce.ts    # reusable debounce hook
 ├── components/
-│   ├── ui/           # generic UI primitives (Button, Input, Popover, Combobox)
+│   ├── ui/               # generic UI primitives (Button, Input, Popover, Combobox)
 │   ├── SearchDestinationForm/ # renders a Search Destination form
-│   ├── SearchResults/ # renders the result of Search Destination
-│   ├── TourCard/      # renders a Tour card
+│   ├── SearchResults/    # renders the result of Search Destination
+│   ├── TourCard/         # renders a Tour card
+├── app/
+│   ├── ErrorBoundary/    # catches render errors, shows fallback UI
+│   ├── NotFound/         # 404 page
+│   ├── Providers.tsx     # QueryClient + ErrorBoundary wrapper
+│   └── router/
+│       ├── router.tsx    # createBrowserRouter
+│       └── routes.ts     # PATHS constants
 ├── pages/
 │   └── Home/
 ├── types/
-│   └── tours.ts     # domain types (TourOffer, GeoOption)
+│   └── tours.ts          # domain types (TourOffer, GeoOption)
 ```
 
 ### Key Design Decisions
@@ -119,6 +126,11 @@ Instead of using React state for the active token, a `ref` holds a mutable `Sear
 **Zustand for search state**
 Search status, results and errors live in a Zustand store with individual selectors to prevent unnecessary re-renders.
 
+**404 page** — unknown routes redirect to a user-friendly Not Found page with a link back to home
+
+**Error handling**
+`ErrorBoundary` via React Router's `errorElement` catches all unexpected render errors and shows a user-friendly fallback with a reload option. Errors are logged to console in development (replace with Sentry in production).
+
 ---
 
 ## 📦 Libraries & Rationale
@@ -128,6 +140,7 @@ Search status, results and errors live in a Zustand store with individual select
 | **Vite**                | Fast dev server and build tool                                      |
 | **React 19**            | UI framework                                                        |
 | **TypeScript**          | Type safety across all layers                                       |
+| **react-router-dom**    | Client-side routing, 404 page, errorElement for error boundaries    |
 | **Zustand**             | Lightweight state management for search store                       |
 | **TanStack Query**      | Server state, caching, and deduplication of API calls               |
 | **Axios**               | HTTP client with interceptor support for centralized error handling |
@@ -144,9 +157,9 @@ Search status, results and errors live in a Zustand store with individual select
 ## 🔧 Code Quality
 
 ```bash
-pnpm run lint      # ESLint
-pnpm run format    # Prettier
-pnpm run tsc       # TypeScript check
+pnpm run lint    # ESLint
+pnpm run format  # Prettier
+pnpm run tsc     # TypeScript check
 ```
 
 Pre-commit hook runs `lint-staged` automatically on every commit.

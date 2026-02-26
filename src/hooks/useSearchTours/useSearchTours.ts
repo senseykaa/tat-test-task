@@ -3,6 +3,7 @@ import { useCallback, useRef } from "react";
 
 import { getCountries } from "~/api/geo";
 import { getHotels } from "~/api/hotels/api";
+import { QUERY_KEYS } from "~/constants/queries";
 import { cancelSearch, createSearchToken, startSearch } from "~/services/search";
 import type { SearchToken } from "~/services/search/types";
 import { aggregateTours } from "~/services/tours";
@@ -41,14 +42,14 @@ export const useSearchTours = () => {
 
   // Cache hotels by countryId — don't fetch them every time
   const { data: hotelsData } = useQuery({
-    queryKey: ["hotels", countryId],
+    queryKey: [QUERY_KEYS.HOTELS, countryId],
     queryFn: () => getHotels(countryId!),
     enabled: !!countryId,
     staleTime: Infinity,
   });
 
   const { data: countriesData } = useQuery({
-    queryKey: ["countries"],
+    queryKey: [QUERY_KEYS.COUNTRIES],
     queryFn: getCountries,
     staleTime: Infinity,
   });

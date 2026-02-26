@@ -12,14 +12,20 @@
   padding: 80px var(--spacing-xl) var(--spacing-xl);
 
   text-align: center;
+
+  background: linear-gradient(160deg, #eff6ff 0%, #f9fafb 60%);
+
+  border-bottom: 1px solid var(--color-border);
 }
 
 .heading {
   margin-bottom: var(--spacing-sm);
 
-  font-size: 36px;
+  font-size: 48px;
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
 }
 
 .subheading {

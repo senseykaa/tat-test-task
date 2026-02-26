@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 import { getCountries, searchGeo } from "~/api/geo/api";
+import { QUERY_KEYS } from "~/constants/queries";
 import type { GeoOption } from "~/types/tours";
 
 import { useDebounce } from "../useDebounce";
@@ -15,13 +16,13 @@ export const useGeoSearch = () => {
   const debouncedQuery = useDebounce(query, GEO_SEARCH_DEBOUNCE_MS);
 
   const { data: countries, isLoading: isLoadingCountries } = useQuery({
-    queryKey: ["countries"],
+    queryKey: [QUERY_KEYS.COUNTRIES],
     queryFn: getCountries,
     staleTime: Infinity,
   });
 
   const { data: geo, isLoading: isLoadingGeo } = useQuery({
-    queryKey: ["geo", debouncedQuery],
+    queryKey: [QUERY_KEYS.GEO, debouncedQuery],
     queryFn: () => searchGeo(debouncedQuery),
     enabled: debouncedQuery.length > 0,
   });
