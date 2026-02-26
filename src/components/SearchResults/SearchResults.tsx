@@ -1,3 +1,4 @@
+import { useScrollIntoView } from "~/hooks/useScrollIntoView";
 import { useSearchError, useSearchStatus, useTours } from "~/store/search/selectors";
 
 import { SearchResultsEmpty } from "./components/SearchResultsEmpty";
@@ -12,10 +13,12 @@ export const SearchResults = () => {
   const tours = useTours();
   const error = useSearchError();
 
+  const wrapperRef = useScrollIntoView<HTMLDivElement>(status === "success" && tours.length > 0);
+
   if (status === "idle") return null;
 
   return (
-    <div className={styles.wrapper}>
+    <div ref={wrapperRef} className={styles.wrapper}>
       {status === "loading" && <SearchResultsLoading />}
 
       {status === "error" && <SearchResultsError message={error} />}
