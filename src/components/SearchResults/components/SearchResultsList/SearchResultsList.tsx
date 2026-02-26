@@ -1,3 +1,4 @@
+import { TourCard } from "~/components/Cards/TourCard";
 import type { TourOffer } from "~/types/global";
 
 import styles from "./styles.module.scss";
@@ -7,6 +8,17 @@ type Props = {
 };
 
 export const SearchResultsList = ({ tours }: Props) => {
-  // todo: task 3
-  return <div className={styles.wrapper}>{tours.length} турів знайдено</div>;
+  const handleOpenPrice = (priceId: string) => {
+    console.log("open price", priceId);
+  };
+
+  return (
+    <ul className={styles.grid}>
+      {tours.map((tour) => (
+        <li key={tour.id}>
+          <TourCard tour={tour} onOpenPrice={handleOpenPrice} />
+        </li>
+      ))}
+    </ul>
+  );
 };

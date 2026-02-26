@@ -6,7 +6,7 @@ export type TourOffer = {
   currency: string;
   startDate: string;
   endDate: string;
-  hotel: Hotel;
+  hotel: Hotel & { countryFlag: string };
 };
 
 export type GeoOption =

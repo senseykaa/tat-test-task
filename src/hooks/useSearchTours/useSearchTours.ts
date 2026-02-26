@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useCallback, useRef } from "react";
 
+import { getCountries } from "~/api/geo";
 import { getHotels } from "~/api/hotels/api";
 import { cancelSearch, createSearchToken, startSearch } from "~/services/search";
 import type { SearchToken } from "~/services/search/types";
@@ -39,6 +40,12 @@ export const useSearchTours = () => {
     staleTime: Infinity,
   });
 
+  const { data: countriesData } = useQuery({
+    queryKey: ["countries"],
+    queryFn: getCountries,
+    staleTime: Infinity,
+  });
+
   const handleSearch = useCallback(async () => {
     if (!countryId) return;
 
@@ -61,7 +68,8 @@ export const useSearchTours = () => {
       if (token.cancelled) return;
 
       const hotels = hotelsData?.data ?? {};
-      const tours = aggregateTours(prices, hotels);
+      const countries = countriesData?.data ?? {};
+      const tours = aggregateTours(prices, hotels, countries);
 
       setTours(tours);
       setStatus("success");
@@ -72,7 +80,7 @@ export const useSearchTours = () => {
 
       setStatus("error");
     }
-  }, [countryId, hotelsData, reset, setStatus, setTours, setError]);
+  }, [countryId, hotelsData, countriesData, reset, setStatus, setTours, setError]);
 
   return { handleSearch, status };
 };
