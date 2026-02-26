@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { forwardRef, type InputHTMLAttributes, type ReactNode } from "react";
 
 import styles from "./styles.module.scss";
@@ -8,7 +9,7 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
 
 export const Input = forwardRef<HTMLInputElement, Props>(({ className, suffix, ...props }, ref) => {
   return (
-    <div className={`${styles.wrapper} ${className ?? ""}`}>
+    <div className={clsx(styles.wrapper, className)}>
       <input ref={ref} className={styles.input} {...props} />
 
       {suffix && <div className={styles.suffix}>{suffix}</div>}

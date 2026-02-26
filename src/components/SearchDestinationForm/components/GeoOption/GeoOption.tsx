@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import { GEO_ICONS } from "~/constants/geo";
 import type { GeoOption as GeoOptionType } from "~/types/tours";
 
@@ -10,7 +12,7 @@ type Props = {
 
 export const GeoOption = ({ option, isActive }: Props) => {
   return (
-    <div className={`${styles.option} ${isActive ? styles.active : ""}`}>
+    <div className={clsx(styles.option, isActive && styles.active)}>
       <span className={styles.icon}>
         {option.type === "country" ? (
           <img src={option.flag} alt={option.label} width={20} height={14} />
