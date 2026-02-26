@@ -87,6 +87,7 @@ src/
 ├── hooks/
 │   ├── useSearchTours.ts # orchestrates search flow
 │   ├── useGeoSearch.ts   # geo search with debounce
+│   ├── useScrollIntoView.ts # smooth scroll to element when condition is met
 │   └── useDebounce.ts    # reusable debounce hook
 ├── components/
 │   ├── ui/               # generic UI primitives (Button, Input, Popover, Combobox)
@@ -149,6 +150,7 @@ Search status, results and errors live in a Zustand store with individual select
 | **SASS**                | CSS variables + nested selectors for component styles               |
 | **ESLint + Prettier**   | Code quality and consistent formatting                              |
 | **Husky + lint-staged** | Pre-commit hooks to enforce quality gates                           |
+| **clsx**                | Utility for conditionally joining class names                       |
 
 > No UI component libraries were used. All components (Button, Input, Popover, Combobox, cards) are implemented from scratch per task requirements.
 
