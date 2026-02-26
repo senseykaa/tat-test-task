@@ -14,9 +14,12 @@ import styles from "./styles.module.scss";
 
 type Props = {
   onSubmit: () => void;
+
+  isDestinationChanged: boolean;
+  isSearching: boolean;
 };
 
-export const SearchDestinationForm = ({ onSubmit }: Props) => {
+export const SearchDestinationForm = ({ onSubmit, isDestinationChanged, isSearching }: Props) => {
   const submitRef = useRef<HTMLButtonElement>(null);
 
   const { value: geoOptions, isLoading, setQuery } = useGeoSearch();
@@ -67,8 +70,12 @@ export const SearchDestinationForm = ({ onSubmit }: Props) => {
         placeholder="Оберіть напрямок"
       />
 
-      <Button ref={submitRef} onClick={handleSubmit} disabled={!destination}>
-        Знайти
+      <Button
+        ref={submitRef}
+        onClick={handleSubmit}
+        disabled={!destination || (isSearching && !isDestinationChanged)}
+      >
+        {isSearching && !isDestinationChanged ? "Пошук..." : "Знайти"}
       </Button>
     </div>
   );

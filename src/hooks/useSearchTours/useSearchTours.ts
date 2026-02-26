@@ -14,9 +14,11 @@ import {
   useSetStatus,
   useSetTours,
 } from "~/store/search/selectors";
+import type { GeoOption } from "~/types/global";
 
 export const useSearchTours = () => {
   const tokenRef = useRef<SearchToken | null>(null);
+  const lastSearchedDestinationRef = useRef<GeoOption | null>(null);
 
   const destination = useDestination();
   const status = useSearchStatus();
@@ -33,6 +35,9 @@ export const useSearchTours = () => {
     // city and hotel both have countryId
     return destination.countryId;
   })();
+
+  const isSearching = status === "loading";
+  const isDestinationChanged = destination?.id !== lastSearchedDestinationRef.current?.id;
 
   // Cache hotels by countryId — don't fetch them every time
   const { data: hotelsData } = useQuery({
@@ -59,14 +64,13 @@ export const useSearchTours = () => {
     // token.value will be populated by startSearch after API response
     const token = createSearchToken("");
     tokenRef.current = token;
+    lastSearchedDestinationRef.current = destination;
 
     reset();
     setStatus("loading");
 
     try {
       const prices = await startSearch(countryId, token);
-
-      // ignore results if search was cancelled
       if (token.cancelled) return;
 
       const hotels = hotelsData?.data ?? {};
@@ -82,7 +86,9 @@ export const useSearchTours = () => {
 
       setStatus("error");
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryId, hotelsData, countriesData, reset, setStatus, setTours, setError]);
 
-  return { handleSearch, status };
+  return { handleSearch, status, isSearching, isDestinationChanged };
 };

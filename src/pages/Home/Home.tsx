@@ -5,7 +5,7 @@ import { useSearchTours } from "~/hooks/useSearchTours";
 import styles from "./styles.module.scss";
 
 export const Home = () => {
-  const { handleSearch } = useSearchTours();
+  const { handleSearch, isDestinationChanged, isSearching } = useSearchTours();
 
   return (
     <div className={styles.home}>
@@ -14,7 +14,11 @@ export const Home = () => {
 
         <p className={styles.subheading}>Найкращі ціни на готелі по всьому світу</p>
 
-        <SearchDestinationForm onSubmit={handleSearch} />
+        <SearchDestinationForm
+          onSubmit={handleSearch}
+          isDestinationChanged={isDestinationChanged}
+          isSearching={isSearching}
+        />
 
         <SearchResults />
       </div>
